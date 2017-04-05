@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="yong.bbs">
+
+	<select id="bbsList" parameterType="Map" resultType="yong.bbs.model.BbsDTO">
+		SELECT b.* FROM 
+          (SELECT ROWNUM as rnum, a.* 
+           FROM (SELECT * 
+                 FROM jsp_bbs 
+                 ORDER BY idx DESC) a) b 
+		WHERE rnum <![CDATA[>]]> #{startnum} AND rnum <![CDATA[<=]]> #{endnum}
+	</select>
+	
+	<select id="totalCnt" resultType="Integer"> <!-- int 로 써도 내부적으로 오토 박싱 -->
+		SELECT COUNT(*) FROM jsp_bbs
+	</select>
+	
+</mapper>

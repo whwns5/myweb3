@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- mybatis 의 필수 속성 : namespace ( 가상적인 패키지 ) -->
+<mapper namespace="yong.emp">
+	<insert id="empInsert" parameterType="yong.emp.model.EmpDTO"> <!-- insert 태그 이름은 그냥 명시하기 위한 것 -->
+		INSERT INTO 
+			employee 
+		VALUES(
+			employee_idx.NEXTVAL, 
+			#{name}, <!--DTO 가 가지고있는 getName 호출 -->
+			#{email},
+			#{dept}
+		)
+	</insert> 
+	
+	<delete id="empDelete" parameterType="String">
+		DELETE FROM employee
+		 WHERE name = #{name}
+	</delete>
+	
+	<update id="empUpdate" parameterType="yong.emp.model.EmpDTO">
+		UPDATE employee SET 
+		name = #{name}, 
+		email = #{email}, 
+		dept = #{dept}
+		WHERE idx = #{idx}
+	</update>
+	
+	<select id="empAllList" resultType="yong.emp.model.EmpDTO">
+		SELECT * FROM employee 
+		ORDER BY idx DESC
+	</select>
+	
+	<select id="empSelect" parameterType="int" resultType="yong.emp.model.EmpDTO">
+		SELECT * FROM employee 
+		 WHERE idx = #{idx}
+	</select>
+	
+	
+</mapper>
