@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+<mapper namespace="yong.project">
+
+	<select id="materTotalCnt" resultType="Integer"> <!-- int 로 써도 내부적으로 오토 박싱 -->
+		SELECT COUNT(*) FROM IS_MATER
+	</select>
+	
+	<select id="materList" parameterType="Map" resultType="yong.project.model.ProjectDTO">
+		SELECT b.* FROM 
+          (SELECT ROWNUM as rnum, a.* 
+           FROM (SELECT * 
+                 FROM IS_MATER 
+                 ORDER BY user_no DESC) a) b 
+		WHERE rnum <![CDATA[>]]> #{startnum} AND rnum <![CDATA[<=]]> #{endnum}
+	</select>
+
+	<select id="materInfo" parameterType="yong.project.model.ProjectDTO" resultType="yong.project.model.ProjectDTO">
+		SELECT * FROM IS_MATER WHERE user_no = #{user_no}
+	</select>
+	
+	<update id="materUpdate" parameterType="yong.project.model.ProjectDTO">
+		UPDATE IS_MATER SET 
+		kor_name = #{kor_name},
+		eng_name = #{eng_name},
+		han_name = #{han_name},
+		jumin_no = #{jumin_no},
+		sajin_nm = #{sajin_nm},
+		birth_ymd = #{birth_ymd},
+		birth_rn = #{birth_rn},
+		sex = #{sex},
+		marry_yn = #{marry_yn},
+		work_year = #{work_year},
+		join_st = #{join_st},
+		hope_work = #{hope_work},
+		addr = #{addr},
+		tel = #{tel},
+		email = #{email},
+		tech_grd = #{tech_grd},
+		alc_qt = #{alc_qt} 
+		WHERE user_no = #{user_no}
+	</update>
+	
+	<insert id="materInsert" parameterType="yong.project.model.ProjectDTO">
+		INSERT INTO IS_MATER VALUES(
+			#{user_no},
+			#{kor_name},
+			#{eng_name},
+			#{han_name},
+			#{jumin_no},
+			#{sajin_nm},
+			#{birth_ymd},
+			#{birth_rn},
+			#{sex},
+			#{marry_yn},
+			#{work_year},
+			#{join_st},
+			#{hope_work},
+			#{addr},
+			#{tel},
+			#{email},
+			#{tech_grd},
+			#{alc_qt}
+		)
+	</insert>
+</mapper>

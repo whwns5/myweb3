@@ -34,6 +34,12 @@
 		</constructor-arg>
 	</bean>
 	
+	<bean id="projectDao" class="yong.project.model.ProjectDAOImple">
+		<constructor-arg>
+			<ref bean="sqlSessionTemplate"/>
+		</constructor-arg>
+	</bean>
+	
 	<!-- <bean id="empDao" class="yong.emp.model.EmpDAOImple">
 	</bean> -->
 	
